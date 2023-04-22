@@ -1,25 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+// create mui theme
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './muiTheme';
+import MonthlyInvestmentCalc from './calculators/MonthlyInvestmentCalc';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const Calculators = ({ calculator }) => {
+	switch (calculator) {
+		case 'monthly-investment':
+			return <MonthlyInvestmentCalc />;
+		default:
+			return <div>Calculator not found</div>;
+	}
+};
+
+const App = ({ domElement }) => {
+	const calculator = domElement.getAttribute('data-calc-name');
+	return (
+		<ThemeProvider theme={theme}>
+			<Calculators calculator={calculator} />
+		</ThemeProvider>
+	);
+};
 
 export default App;
