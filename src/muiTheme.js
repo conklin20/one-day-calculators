@@ -21,6 +21,35 @@ const theme = createTheme({
 				variant: 'outlined',
 			},
 		},
+		MuiPaper: {
+			defaultProps: {
+				elevation: 3,
+				sx: {
+					padding: '1rem',
+					margin: '1rem',
+				},
+			},
+		},
+		MuiGrid: {
+			// grid container default props
+			defaultProps: {
+				spacing: 2,
+				sx: {
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+					alignItems: 'center',
+				},
+			},
+		},
+		MuiLink: {
+			defaultProps: {
+				underline: 'hover',
+				sx: {
+					cursor: 'pointer',
+				},
+			},
+		},
 	},
 });
 
