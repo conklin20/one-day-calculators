@@ -1,6 +1,6 @@
 {
 	"name": "one-day-calculators",
-	"version": "1.0.4",
+	"version": "1.0.6",
 	"dependencies": {
 		"@emotion/react": "^11.10.6",
 		"@emotion/styled": "^11.10.6",

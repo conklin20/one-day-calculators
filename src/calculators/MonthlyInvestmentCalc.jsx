@@ -4,6 +4,7 @@ import {
 	ButtonGroup,
 	FormControlLabel,
 	Grid,
+	Link,
 	Paper,
 	TextField,
 	Tooltip,
@@ -13,6 +14,7 @@ import React from 'react';
 import { handleCurrencyChange, toCurrencyString } from '../utils/currencyUtils';
 import { handleRateChange, handleYearsChange } from '../utils/numberUtils';
 import Finance from 'tvm-financejs';
+import Footer from '../shared/Footer';
 
 const calculator = new Finance();
 
@@ -48,31 +50,15 @@ const MonthlyInvestmentCalc = () => {
 	}, [inputs]);
 
 	return (
-		<Paper
-			elevation={3}
-			sx={{
-				height: '100%',
-				width: '100%',
-				padding: '1rem',
-			}}
-		>
-			<Grid
-				container
-				spacing={2}
-				sx={{
-					display: 'flex',
-					flexDirection: 'column',
-					justifyContent: 'center',
-					alignItems: 'center',
-				}}
-			>
+		<Paper>
+			<Grid container>
 				<Grid item xs={12}>
 					<Typography variant='h6' gutterBottom>
 						Monthly Investment Calculator
 					</Typography>
 				</Grid>
 				<Grid item xs={12}>
-					<Tooltip title={`What's amount do you need to live your dream?`}>
+					<Tooltip title={`What amount do you need to live your dream?`}>
 						<TextField
 							label='Target Balance'
 							value={toCurrencyString(inputs.targetBalance)}
@@ -89,17 +75,15 @@ const MonthlyInvestmentCalc = () => {
 				<Grid item xs={12}>
 					<FormControlLabel
 						control={
-							<ButtonGroup
-								sx={{
-									justifyContent: 'space-between',
-									marginBottom: '1rem',
-								}}
-								value={inputs.initialInvestment}
-							>
+							<ButtonGroup value={inputs.initialInvestment}>
 								<Button
 									variant={inputs.initialInvestment ? 'contained' : 'outlined'}
 									onClick={() =>
-										setInputs({ ...inputs, initialInvestment: true })
+										setInputs({
+											...inputs,
+											initialInvestment: true,
+											initialInvestmentAmount: 10000,
+										})
 									}
 								>
 									Yes
@@ -124,7 +108,7 @@ const MonthlyInvestmentCalc = () => {
 				</Grid>
 				{inputs.initialInvestment && (
 					<Grid item xs={12}>
-						<Tooltip title={`How much money do you have to initial invest?`}>
+						<Tooltip title={`How much money could you feasibly invest up front?`}>
 							<TextField
 								label='Initial Investment'
 								value={toCurrencyString(inputs.initialInvestmentAmount)}
@@ -139,7 +123,7 @@ const MonthlyInvestmentCalc = () => {
 					</Grid>
 				)}
 				<Grid item xs={12}>
-					<Tooltip title={`How many years do you have to invest?`}>
+					<Tooltip title={`How many years until you'd ideally reach your goal?`}>
 						<TextField
 							label='Years'
 							value={inputs.years}
@@ -168,27 +152,44 @@ const MonthlyInvestmentCalc = () => {
 						/>
 					</Tooltip>
 				</Grid>
-				<Grid item xs={12}>
-					<Typography variant='h6' gutterBottom>
+				{/* <Grid item xs={12}>
+					<Tooltip title={`What is your risk tolerance?`}>
+						<Slider
+							value={inputs.rate}
+							onChange={e => setInputs({ ...inputs, rate: handleRateChange(e) })}
+							min={0}
+							max={1}
+							step={0.01}
+							size='small'
+							valueLabelDisplay='off'
+						/>
+					</Tooltip>
+				</Grid> */}
+				<Grid id='one-day-calc-result' item xs={12} textAlign='center'>
+					<Typography variant='subtitle1' gutterBottom>
 						{monthlyContriutionNeeded && (
-							<Box display='flex'>
-								You need to contribute{' '}
-								<Box color='success.dark' fontWeight={'bold'} pl='4px'>
+							<Box>
+								{`You'd need to contribute`}
+								<Box
+									component='span'
+									color='success.dark'
+									fontWeight={'bold'}
+									pl='4px'
+								>
 									{toCurrencyString(monthlyContriutionNeeded)}
 								</Box>
-								{'  '}
-								/mo
+								{`/mo to reach your goal. Contact `}
+								<Link component='span' href='https://www.onedayadvice.com/'>
+									{' '}
+									One Day Advice{' '}
+								</Link>
+								{` today to start planning!`}
 							</Box>
 						)}
 					</Typography>
 				</Grid>
 				<Grid item xs={12}>
-					<img
-						src='https://uploads-ssl.webflow.com/608246c974cb770b2a8c4bdd/6084670e9d95cb6043091974_oneday_logomiddle_transparent-p-500.png'
-						alt='one day logo'
-						width='100px'
-						onClick={() => window.open('https://www.onedayadvice.com/')}
-					/>
+					<Footer />
 				</Grid>
 			</Grid>
 		</Paper>
